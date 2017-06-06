@@ -1,6 +1,7 @@
 const express = require('express');
 const validator = require('validator');
 const Joi = require('joi');
+var bcrypt = require('bcrypt');
 var Employee = require("./../db/models/Employee");
 
 const router = new express.Router();
@@ -13,7 +14,7 @@ router.post('/', (req, res) => {
 
     var empObject = {
         username: body.username,
-        password: body.password,
+        password: bcrypt.hashSync(body.password, 10),
         isAdmin: body.isAdmin,
         isRoot: false,
         email: body.email,
@@ -36,13 +37,13 @@ router.post('/', (req, res) => {
             Employee.create(empObject, (err, emp) => {
 
                 if (err) {
-                    console.error("Error in insert the First Admin object ");
+                    console.error("Error in insert the Employee object ");
                     return res.status(500).json({
                         'status': 'error',
                         'message': 'Unknown error occured.'
                     });
                 } else {
-                    console.error("Successfully Created the Admin Object ");
+                    console.error("Successfully Created the Employee Object ");
                     return res.status(201).json({
                         'status': 'success',
                         'message': 'Successfully created.'
@@ -53,10 +54,6 @@ router.post('/', (req, res) => {
         }
 
     });
-
-
-
-
 });
 
 
@@ -89,7 +86,72 @@ router.get('/:username', (req, res) => {
 
 });
 
+// Update a user.
 
+router.put('/:username', (req, res) => {
+    const body = req.body;
+    const uName = req.params.username;
+
+    var empObject = {
+        username: body.username,
+        password: body.password,
+        email: body.email
+    };
+
+    if (empObject.password) {
+        empObject.password = bcrypt.hashSync(empObject.password, 10);
+    } else {
+        delete empObject.password;
+    }
+
+    Employee.find({
+        username: uName
+    }, (err, adminEmp) => {
+
+        if (err) {
+            console.error("An Error has occured ", err);
+            return;
+        } else if (adminEmp.length == 0) {
+            return res.status(404).json({
+                'status': 'error',
+                'message': 'Employee does not exists.'
+            });
+        } else if (adminEmp.length >= 1) {
+            empObject.isAdmin = adminEmp[0].isAdmin;
+            empObject.isRoot = adminEmp[0].isRoot;
+            empObject.createdBy = adminEmp[0].createdBy;
+            if (body.email) {
+                empObject.email = body.email;
+            } else {
+                empObject.email = adminEmp[0].email;
+            }
+
+            Employee.updateOne({
+                    username: uName
+                }, empObject,
+                (err, emp) => {
+
+                    if (err) {
+                        console.error("Error in Updating the employee ");
+                        return res.status(500).json({
+                            'status': 'error',
+                            'message': 'Unknown error occured while updating the emplyee.'
+                        });
+                    } else {
+                        console.error("Successfully updated the employee ");
+                        return res.status(201).json({
+                            'status': 'success',
+                            'message': 'Successfully updated.'
+                        });
+                    }
+
+                });
+        }
+
+    });
+});
+
+// Delete a User
 router.delete('/:username', (req, res) => {
     var username = req.params.username;
     console.log(username);
