@@ -42,6 +42,7 @@ MongoModels.connect(process.env.MONGODB_URI, {}, (err, db) => {
 const authRoutes = require('./server/routes/auth');
 app.use('/auth', authRoutes);
 app.use('/api/employee', require('./server/routes/employee'));
+app.use('/api/review', require('./server/routes/review'));
 
 // start the server
 app.listen(3000, () => {
