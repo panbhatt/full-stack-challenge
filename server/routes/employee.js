@@ -89,4 +89,43 @@ router.get('/:username', (req, res) => {
 
 });
 
+
+router.delete('/:username', (req, res) => {
+    var username = req.params.username;
+    console.log(username);
+    Employee.find({
+        username
+    }, (err, emp) => {
+        console.log(emp)
+        if (err) {
+            console.error("An Error has occured ", err);
+            return res.status(500).json({
+                'status': 'error',
+                'message': 'Unknown error occured.'
+            });
+        } else if (emp.length == 1) {
+            Employee.deleteOne({
+                username
+            }, (err, count) => {
+                if (count == 1)
+                    return res.status(200).json({
+                        'status': 'succeess',
+                        'message': 'Message Deleted'
+                    });
+
+            });
+
+        } else if (emp.length == 0) {
+            return res.status(404).json({
+                'status': 'error',
+                'message': "Employee not found "
+            });
+        };
+
+    });
+
+});
+
+
+
 module.exports = router;
