@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import axios from 'axios';
 import LoginForm from '../components/LoginForm.jsx';
 
 
@@ -15,7 +16,8 @@ class LoginPage extends React.Component {
       errors: {},
       user: {
         email: '',
-        password: ''
+        password: '',
+        username : ''
       }
     };
 
@@ -34,6 +36,32 @@ class LoginPage extends React.Component {
 
     console.log('email:', this.state.user.email);
     console.log('password:', this.state.user.password);
+
+    var userObject = {
+      username : this.state.user.username,
+      password : this.state.user.password,
+    }
+    var self = this;
+
+    axios.post(`/auth/login`,userObject,{ headers: {'Accept': 'application/json'} })
+      .then(function (response) {
+          if(response.admin == true) {
+              // Do the Routing here.
+          }
+        })
+        .catch(function (errRs) {
+          console.log(errRs.response.data.message) ;
+
+          var errObj = {
+            summary : errRs.response.data.message,
+            username : errRs.response.data.errors.username,
+            password : errRs.response.data.errors.password
+          } ;
+
+          self.setState({
+            errors : errObj
+          })
+        });
   }
 
   /**

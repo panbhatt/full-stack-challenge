@@ -75,7 +75,7 @@ router.put('/:id', (req, res) => {
 
     Review.findById(
         reviewId, (err, review) => {
-            console.log(review);
+
             if (err) {
                 console.error("An Error has occured ", err);
                 return;

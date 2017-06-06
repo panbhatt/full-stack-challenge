@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoModels = require('mongo-models');
-var bcrypt = require('bcrypt');
+
 var Employee = require("./server/db/models/Employee");
 
 const app = express();
@@ -58,7 +58,7 @@ function insertAdminRecord() {
 
     var empObject = {
         username: ADMIN,
-        password: bcrypt.hashSync(ADMIN, 10),
+        password: ADMIN,
         isAdmin: true,
         isRoot: true,
         email: "admin@admin.com",

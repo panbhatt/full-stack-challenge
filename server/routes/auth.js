@@ -1,5 +1,7 @@
 const express = require('express');
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+const Employee = require('./../db/models/Employee');
 
 const router = new express.Router();
 
@@ -53,9 +55,9 @@ function validateLoginForm(payload) {
     let isFormValid = true;
     let message = '';
 
-    if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
+    if (!payload || typeof payload.username !== 'string' || payload.username.trim().length === 0) {
         isFormValid = false;
-        errors.email = 'Please provide your email address.';
+        errors.username = 'Please provide your Username.';
     }
 
     if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
@@ -89,15 +91,45 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res) => {
     const validationResult = validateLoginForm(req.body);
-    if (!validationResult.success) {
+    if (validationResult.success) {
+
+        Employee.findOne({
+            username: req.body.username
+        }, (err, result) => {
+            console.log(result);
+            if (err) {
+                return res.status(500).json({
+                    'status': 'error',
+                    'message': 'Unknow error occured'
+                })
+            } else {
+                if (result) {
+                    if (req.body.password === result.password) {
+                        return res.status(200).json({
+                            'status': 'sucess',
+                            'message': 'Successfuly login',
+                            'admin': result.isAdmin
+                        });
+                    }
+                } else {
+                    res.status(404).json({
+                        'status': 'error',
+                        'message': 'Username/password mismatch.'
+                    });
+                }
+
+            }
+        });
+
+
+    } else {
         return res.status(400).json({
-            success: false,
+            status: 'error',
             message: validationResult.message,
             errors: validationResult.errors
         });
     }
 
-    return res.status(200).end();
 });
 
 

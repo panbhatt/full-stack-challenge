@@ -1,7 +1,6 @@
 const express = require('express');
 const validator = require('validator');
 const Joi = require('joi');
-var bcrypt = require('bcrypt');
 var Employee = require("./../db/models/Employee");
 
 const router = new express.Router();
@@ -14,7 +13,7 @@ router.post('/', (req, res) => {
 
     var empObject = {
         username: body.username,
-        password: bcrypt.hashSync(body.password, 10),
+        password: body.password,
         isAdmin: body.isAdmin,
         isRoot: false,
         email: body.email,
@@ -99,7 +98,7 @@ router.put('/:username', (req, res) => {
     };
 
     if (empObject.password) {
-        empObject.password = bcrypt.hashSync(empObject.password, 10);
+
     } else {
         delete empObject.password;
     }
