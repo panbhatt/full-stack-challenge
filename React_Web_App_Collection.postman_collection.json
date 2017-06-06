@@ -1,0 +1,151 @@
+{
+	"variables": [],
+	"info": {
+		"name": "React_Web_App_Collection",
+		"_postman_id": "5f7f9a39-f33e-8a38-bcc5-02b527f3378a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Employee Creation",
+			"request": {
+				"url": "http://localhost:3000/api/employee",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"panbhatt\",\n\t\"password\" : \"internet\",\n\t\"isAdmin\" : true,\n\t\"isRoot\": false,\n    \"email\": \"panbhatt@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Employee GET",
+			"request": {
+				"url": "http://localhost:3000/api/employee/panbhatt",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"panbhatt\",\n\t\"password\" : \"internet\",\n\t\"isAdmin\" : true,\n\t\"isRoot\": false,\n    \"email\": \"panbhatt@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Employee Delete",
+			"request": {
+				"url": "http://localhost:3000/api/employee/panbhatt",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"panbhatt\",\n\t\"password\" : \"internet\",\n\t\"isAdmin\" : true,\n\t\"isRoot\": false,\n    \"email\": \"panbhatt@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Employee Updation",
+			"request": {
+				"url": "http://localhost:3000/api/employee/panbhatt",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"panbhatt1\",\n\t\"password\" : \"internet1\",\n    \"email\": \"panbhatt@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Review Creation",
+			"request": {
+				"url": "http://localhost:3000/api/review",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"by\" : \"panbhatt\",\n\t\"for\" : \"panbhatt1\",\n\t\"review\" : \"second time time\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Reviews GET ALL",
+			"request": {
+				"url": "http://localhost:3000/api/employee/panbhatt",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"panbhatt\",\n\t\"password\" : \"internet\",\n\t\"isAdmin\" : true,\n\t\"isRoot\": false,\n    \"email\": \"panbhatt@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Review Updation",
+			"request": {
+				"url": "http://localhost:3000/api/review/5936daeae7436a53c88b75c6",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\"review\" : \"second time time first time done... \"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
