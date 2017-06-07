@@ -14,10 +14,15 @@ export default class AdminMenu extends React.Component {
     super(props);
     this.state = {value: 1};
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEmployeeItemChange = this.handleEmployeeItemChange.bind(this);
+    this.handleReviewMenuItemChange = this.handleReviewMenuItemChange.bind(this);
   }
 
-  handleChange(event, index, value) {
+  handleEmployeeItemChange(event, index, value) {
+    this.setState({value});
+  }
+
+  handleReviewMenuItemChange(event, index, value) {
     this.setState({value});
   }
 
@@ -25,24 +30,18 @@ export default class AdminMenu extends React.Component {
     return (
       <div>
         <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="Never" />
-          <MenuItem value={2} primaryText="Every Night" />
-          <MenuItem value={3} primaryText="Weeknights" />
-          <MenuItem value={4} primaryText="Weekends" />
-          <MenuItem value={5} primaryText="Weekly" />
+          <MenuItem value={1} primaryText="Employee" />
+          <MenuItem value={2} primaryText="Add Employee" />
+          <MenuItem value={3} primaryText="Update Employee" />
+          <MenuItem value={4} primaryText="View Employees" />
         </DropDownMenu>
-        <br />
-        <DropDownMenu
-          value={this.state.value}
-          onChange={this.handleChange}
-          style={styles.customWidth}
-          autoWidth={false}
-        >
-          <MenuItem value={1} primaryText="Custom width" />
-          <MenuItem value={2} primaryText="Every Night" />
-          <MenuItem value={3} primaryText="Weeknights" />
-          <MenuItem value={4} primaryText="Weekends" />
-          <MenuItem value={5} primaryText="Weekly" />
+
+        <DropDownMenu  value={this.state.value}  onChange={this.handleChange} style={styles.customWidth} autoWidth={false}>
+          <MenuItem value={1} primaryText="Review" />
+          <MenuItem value={2} primaryText="Add Review" />
+          <MenuItem value={3} primaryText="Assign Reviewe" />
+          <MenuItem value={4} primaryText="View Review" />
+
         </DropDownMenu>
       </div>
     );

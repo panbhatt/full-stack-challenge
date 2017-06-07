@@ -18499,13 +18499,19 @@ var AdminMenu = function (_React$Component) {
 
     _this.state = { value: 1 };
 
-    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleEmployeeItemChange = _this.handleEmployeeItemChange.bind(_this);
+    _this.handleReviewMenuItemChange = _this.handleReviewMenuItemChange.bind(_this);
     return _this;
   }
 
   _createClass(AdminMenu, [{
-    key: 'handleChange',
-    value: function handleChange(event, index, value) {
+    key: 'handleEmployeeItemChange',
+    value: function handleEmployeeItemChange(event, index, value) {
+      this.setState({ value: value });
+    }
+  }, {
+    key: 'handleReviewMenuItemChange',
+    value: function handleReviewMenuItemChange(event, index, value) {
       this.setState({ value: value });
     }
   }, {
@@ -18517,26 +18523,18 @@ var AdminMenu = function (_React$Component) {
         _react2.default.createElement(
           _DropDownMenu2.default,
           { value: this.state.value, onChange: this.handleChange },
-          _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 'Never' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 'Every Night' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 'Weeknights' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 4, primaryText: 'Weekends' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 5, primaryText: 'Weekly' })
+          _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 'Employee' }),
+          _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 'Add Employee' }),
+          _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 'Update Employee' }),
+          _react2.default.createElement(_MenuItem2.default, { value: 4, primaryText: 'View Employees' })
         ),
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
           _DropDownMenu2.default,
-          {
-            value: this.state.value,
-            onChange: this.handleChange,
-            style: styles.customWidth,
-            autoWidth: false
-          },
-          _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 'Custom width' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 'Every Night' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 'Weeknights' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 4, primaryText: 'Weekends' }),
-          _react2.default.createElement(_MenuItem2.default, { value: 5, primaryText: 'Weekly' })
+          { value: this.state.value, onChange: this.handleChange, style: styles.customWidth, autoWidth: false },
+          _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 'Review' }),
+          _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 'Add Review' }),
+          _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 'Assign Reviewe' }),
+          _react2.default.createElement(_MenuItem2.default, { value: 4, primaryText: 'View Review' })
         )
       );
     }
@@ -19130,6 +19128,7 @@ var LoginPage = function (_React$Component) {
           sessionStorage.setItem('admin', true);
           _reactRouter.browserHistory.push('/admin');
         } else {
+          sessionStorage.setItem('admin', false);
           _reactRouter.browserHistory.push('/home');
         }
       }).catch(function (errRs) {
@@ -19138,8 +19137,8 @@ var LoginPage = function (_React$Component) {
 
         var errObj = {
           summary: errRs.response.data.message,
-          username: errRs.response.data.errors.username,
-          password: errRs.response.data.errors.password
+          username: errRs.response.data.errors && errRs.response.data.errors.username,
+          password: errRs.response.data.errors && errRs.response.data.errors.password
         };
 
         self.setState({

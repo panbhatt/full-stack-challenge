@@ -103,12 +103,18 @@ router.post('/login', (req, res) => {
                     'message': 'Unknow error occured'
                 })
             } else {
+                console.log("COMING HEREEEEE ");
                 if (result) {
                     if (req.body.password === result.password) {
                         return res.status(200).json({
                             'status': 'sucess',
                             'message': 'Successfuly login',
                             'admin': result.isAdmin
+                        });
+                    } else {
+                        return res.status(401).json({
+                            'status': 'error',
+                            'message': 'Username/password Mismatch.',
                         });
                     }
                 } else {

@@ -52,9 +52,10 @@ class LoginPage extends React.Component {
             });
           if(response.data.admin == true) {
               // Do the Routing here.
-              sessionStorage.setItem('admin', true) ; 
+              sessionStorage.setItem('admin', true) ;
               browserHistory.push('/admin');
           } else {
+              sessionStorage.setItem('admin', false) ;
               browserHistory.push('/home');
           }
 
@@ -65,8 +66,8 @@ class LoginPage extends React.Component {
 
           var errObj = {
             summary : errRs.response.data.message,
-            username : errRs.response.data.errors.username,
-            password : errRs.response.data.errors.password
+            username : errRs.response.data.errors && errRs.response.data.errors.username,
+            password : errRs.response.data.errors && errRs.response.data.errors.password
           } ;
 
           self.setState({
