@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
 import { browserHistory, Router } from 'react-router';
-import LoginForm from '../components/LoginForm.jsx';
+import AdminPanel from '../components/AdminPanel.jsx';
 
 
-class LoginPage extends React.Component {
+class AdminPage extends React.Component {
 
   /**
    * Class constructor.
@@ -52,7 +52,7 @@ class LoginPage extends React.Component {
             });
           if(response.data.admin == true) {
               // Do the Routing here.
-              sessionStorage.setItem('admin', true) ; 
+              
               browserHistory.push('/admin');
           } else {
               browserHistory.push('/home');
@@ -95,15 +95,11 @@ class LoginPage extends React.Component {
    */
   render() {
     return (
-      <LoginForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        user={this.state.user}
+      <AdminPanel
       />
     );
   }
 
 }
 
-export default LoginPage;
+export default AdminPage;

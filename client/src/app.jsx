@@ -8,6 +8,7 @@ import routes from './routes.js';
 
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
+sessionStorage.removeItem('admin') ; 
 
 ReactDom.render((
   <MuiThemeProvider muiTheme={getMuiTheme()}>
