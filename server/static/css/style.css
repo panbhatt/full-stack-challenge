@@ -49,19 +49,19 @@ a:hover {
 }
 
 .card-heading {
-  padding: 16px;
+  padding: 10px;
 }
 
 .field-line, .button-line {
-  padding: 16px;
+  padding: 10px;
 }
 
 .error-message {
-  padding: 0 16px;
+  padding: 0 10px;
   color: tomato;
 }
 
 .success-message {
-  padding: 0 16px;
+  padding: 0 10px;
   color: green;
 }

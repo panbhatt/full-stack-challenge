@@ -5,10 +5,10 @@ import AdminMenu from './AdminMenu.jsx';
 import MenuItem from 'material-ui/MenuItem';
 
 
-const AdminPanel = () => (
+const AdminPanel = ({onChange}) => (
   <Card className="container">
     <CardTitle title="Administration">
-      <AdminMenu/>
+      <AdminMenu onChange={onChange}/>
     </CardTitle>
 
 

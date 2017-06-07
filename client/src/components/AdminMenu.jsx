@@ -12,35 +12,42 @@ export default class AdminMenu extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: 1};
+    this.state = {
+      empSelect : "employee",
+      revSelect : "review"
+    };
 
     this.handleEmployeeItemChange = this.handleEmployeeItemChange.bind(this);
     this.handleReviewMenuItemChange = this.handleReviewMenuItemChange.bind(this);
   }
 
   handleEmployeeItemChange(event, index, value) {
-    this.setState({value});
+    console.log("COMING HERE EMpoyee item change", index, value ) ;
+    //this.setState({value});
+    this.props.onChange(value);
   }
 
   handleReviewMenuItemChange(event, index, value) {
-    this.setState({value});
+    console.log("COMING HERE Review item change", index, value) ;
+    //this.setState({value});
+    this.props.onChange(value);
   }
 
   render() {
     return (
       <div>
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="Employee" />
-          <MenuItem value={2} primaryText="Add Employee" />
-          <MenuItem value={3} primaryText="Update Employee" />
-          <MenuItem value={4} primaryText="View Employees" />
+        <DropDownMenu value={this.state.empSelect} onChange={this.handleEmployeeItemChange}>
+          <MenuItem value="employee" primaryText="Employee" />
+          <MenuItem value="AddEmployee" primaryText="Add Employee" />
+          <MenuItem value="UpdateEmployee" primaryText="Update Employee" />
+          <MenuItem value="ViewEmployee" primaryText="View Employees" />
         </DropDownMenu>
 
-        <DropDownMenu  value={this.state.value}  onChange={this.handleChange} style={styles.customWidth} autoWidth={false}>
-          <MenuItem value={1} primaryText="Review" />
-          <MenuItem value={2} primaryText="Add Review" />
-          <MenuItem value={3} primaryText="Assign Reviewe" />
-          <MenuItem value={4} primaryText="View Review" />
+        <DropDownMenu  value={this.state.revSelect}  onChange={this.handleReviewMenuItemChange} style={styles.customWidth} autoWidth={false}>
+          <MenuItem value="review" primaryText="Review" />
+          <MenuItem value="AddReview" primaryText="Add Review" />
+          <MenuItem value="AssignReview" primaryText="Assign Reviewe" />
+          <MenuItem value="ViewReview" primaryText="View Review" />
 
         </DropDownMenu>
       </div>

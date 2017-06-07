@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import axios from 'axios';
 import { browserHistory, Router } from 'react-router';
 import AdminPanel from '../components/AdminPanel.jsx';
+import EmployeeAddForm from './../components/EmployeeAddForm.jsx' ;
 
 
 class AdminPage extends React.Component {
@@ -14,16 +15,19 @@ class AdminPage extends React.Component {
 
     // set the initial component state
     this.state = {
-      errors: {},
-      user: {
-        email: '',
-        password: '',
-        username : ''
-      }
+      action : ""
     };
 
     this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
+    this.handleMenuItemChange = this.handleMenuItemChange.bind(this);
+
+  }
+
+  handleMenuItemChange(value) {
+
+    //event.preventDefault();
+    console.log("FINALLY COMING HERE in ADMIN page. ", value) ;
+    this.setState({ action : value}) ; 
   }
 
   /**
@@ -44,50 +48,6 @@ class AdminPage extends React.Component {
     }
     var self = this;
 
-    axios.post(`/auth/login`,userObject,{ headers: {'Accept': 'application/json'} })
-      .then(function (response) {
-
-        self.setState({
-        errors: {}
-            });
-          if(response.data.admin == true) {
-              // Do the Routing here.
-              
-              browserHistory.push('/admin');
-          } else {
-              browserHistory.push('/home');
-          }
-
-        })
-        .catch(function (errRs) {
-
-          console.log(errRs.response.data.message) ;
-
-          var errObj = {
-            summary : errRs.response.data.message,
-            username : errRs.response.data.errors.username,
-            password : errRs.response.data.errors.password
-          } ;
-
-          self.setState({
-            errors : errObj
-          })
-        });
-  }
-
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
   }
 
   /**
@@ -95,8 +55,11 @@ class AdminPage extends React.Component {
    */
   render() {
     return (
-      <AdminPanel
-      />
+      <div>
+      <AdminPanel onChange={this.handleMenuItemChange}/>
+        { this.state.action === 'AddEmployee' ? <EmployeeAddForm/>  : null }
+
+      </div>
     );
   }
 
