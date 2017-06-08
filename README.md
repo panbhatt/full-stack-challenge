@@ -1,8 +1,15 @@
 # Full Stack Developer Challenge
 This is an interview challenge for Paytm Labs. Please feel free to fork. Pull Requests will be ignored.
 
+
 ## Requirements
 Design a web application that allows employees to submit feedback toward each other's performance review.
+MONGO Server, running on either localhost or provided with the MONGODB_URI Env variable.
+
+## Build and RUn
+   1. npm install or yarn
+   2. npm start : This will start the API Server.  
+
 
 ### Admin view
 * Add/remove/update/view employees
