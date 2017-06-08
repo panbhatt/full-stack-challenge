@@ -146,6 +146,26 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Employee GET ALL",
+			"request": {
+				"url": "http://localhost:3000/api/employee",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"panbhatt\",\n\t\"password\" : \"internet\",\n\t\"isAdmin\" : true,\n\t\"isRoot\": false,\n    \"email\": \"panbhatt@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
