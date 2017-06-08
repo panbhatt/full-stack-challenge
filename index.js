@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoModels = require('mongo-models');
+const boolParser = require('express-query-boolean');
 
 var Employee = require("./server/db/models/Employee");
 
@@ -12,6 +13,7 @@ app.use(express.static('./client/dist/'));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(boolParser());
 
 app.use(bodyParser.json());
 

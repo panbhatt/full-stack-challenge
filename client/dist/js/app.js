@@ -18640,8 +18640,8 @@ var Base = function Base(_ref) {
         ),
         _react2.default.createElement(
           _reactRouter.Link,
-          { to: '/signup' },
-          'Sign up'
+          { to: '/login' },
+          'Sign out'
         )
       )
     ),
@@ -18761,17 +18761,6 @@ var LoginForm = function LoginForm(_ref) {
         'div',
         { className: 'button-line' },
         _react2.default.createElement(_RaisedButton2.default, { type: 'submit', label: 'Log in', primary: true })
-      ),
-      _react2.default.createElement(
-        _Card.CardText,
-        null,
-        'Don\'t have an account? ',
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/signup' },
-          'Create one'
-        ),
-        '.'
       )
     )
   );
@@ -18929,6 +18918,10 @@ var _EmployeeAddForm = __webpack_require__(520);
 
 var _EmployeeAddForm2 = _interopRequireDefault(_EmployeeAddForm);
 
+var _ReviewAssignForm = __webpack_require__(531);
+
+var _ReviewAssignForm2 = _interopRequireDefault(_ReviewAssignForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19001,7 +18994,8 @@ var AdminPage = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_AdminPanel2.default, { onChange: this.handleMenuItemChange }),
-        this.state.action === 'AddEmployee' ? _react2.default.createElement(_EmployeeAddForm2.default, null) : null
+        this.state.action === 'AddEmployee' ? _react2.default.createElement(_EmployeeAddForm2.default, null) : null,
+        this.state.action === 'AddReview' ? _react2.default.createElement(_ReviewAssignForm2.default, null) : null
       );
     }
   }]);
@@ -52132,6 +52126,236 @@ ToggleCheckBox.displayName = 'ToggleCheckBox';
 ToggleCheckBox.muiName = 'SvgIcon';
 
 exports.default = ToggleCheckBox;
+
+/***/ }),
+/* 531 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(44);
+
+var _Card = __webpack_require__(75);
+
+var _RaisedButton = __webpack_require__(172);
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _TextField = __webpack_require__(173);
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _Checkbox = __webpack_require__(528);
+
+var _Checkbox2 = _interopRequireDefault(_Checkbox);
+
+var _RadioButton = __webpack_require__(523);
+
+var _DropDownMenu = __webpack_require__(515);
+
+var _DropDownMenu2 = _interopRequireDefault(_DropDownMenu);
+
+var _MenuItem = __webpack_require__(356);
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+var _axios = __webpack_require__(86);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ReviewAssignForm = function (_React$Component) {
+  _inherits(ReviewAssignForm, _React$Component);
+
+  function ReviewAssignForm(props) {
+    _classCallCheck(this, ReviewAssignForm);
+
+    // set the initial component state
+    var _this = _possibleConstructorReturn(this, (ReviewAssignForm.__proto__ || Object.getPrototypeOf(ReviewAssignForm)).call(this, props));
+
+    _this.state = {
+      users: [],
+      errors: {}
+
+    };
+
+    _this.onSubmit = _this.onSubmit.bind(_this);
+    _this.handleSourceChange = _this.handleSourceChange.bind(_this);
+    _this.handleTargetChange = _this.handleTargetChange.bind(_this);
+    _this.getEmployeeList = _this.getEmployeeList.bind(_this);
+
+    _this.getEmployeeList();
+
+    return _this;
+  }
+
+  _createClass(ReviewAssignForm, [{
+    key: 'onSubmit',
+    value: function onSubmit(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      var self = this;
+      var state = this.state;
+
+      if (state.selectedSource === state.selectedTarget) {
+        state.msgFailure = "Reviewer and Assigned Employee's can't be same";
+        state.msgSuccess = undefined;
+        this.setState(state);
+      } else {
+        // Raise a ajax request and get the response.
+        var apiObject = {
+          by: state.selectedSource,
+          for: state.selectedTarget,
+          review: ""
+        };
+        _axios2.default.post('/api/review', apiObject).then(function (response) {
+          state.errors.msgFailure = "";
+          state.msgSuccess = "Review has been added. ";
+          state.msgFailure = undefined;
+          _this2.setState(state);
+        }).catch(function (response) {});
+      }
+    }
+
+    // This function will retrieve the data
+
+  }, {
+    key: 'getEmployeeList',
+    value: function getEmployeeList() {
+
+      var self = this;
+      _axios2.default.get('/api/employee').then(function (response) {
+        console.log(response);
+        var selected;
+        if (response.data.length > 0) {
+          selected = response.data[0].username;
+        }
+        self.setState({
+          users: response.data,
+          selectedSource: selected,
+          selectedTarget: selected
+        });
+      }).catch(function (errRs) {});
+    }
+
+    // Hanlding first Select click
+
+  }, {
+    key: 'handleSourceChange',
+    value: function handleSourceChange(event, index, value) {
+      var state = this.state;
+      state['source'] = value;
+      state['selectedSource'] = value;
+      this.setState(state);
+    }
+
+    // Hanlding Second Select click
+
+  }, {
+    key: 'handleTargetChange',
+    value: function handleTargetChange(event, index, value) {
+      var state = this.state;
+      state['target'] = value;
+      state['selectedTarget'] = value;
+      this.setState(state);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        _Card.Card,
+        { className: 'container' },
+        _react2.default.createElement(
+          'form',
+          { action: '/', onSubmit: this.onSubmit },
+          _react2.default.createElement(
+            'h2',
+            { className: 'card-heading' },
+            'Assign Review'
+          ),
+          this.state.msgSuccess != '' && _react2.default.createElement(
+            'p',
+            { className: 'success-message' },
+            this.state.msgSuccess
+          ),
+          this.state.msgFailure != '' && _react2.default.createElement(
+            'p',
+            { className: 'error-message' },
+            this.state.msgFailure
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'field-line' },
+            _react2.default.createElement(
+              _DropDownMenu2.default,
+              { value: this.state.selectedSource, onChange: this.handleSourceChange },
+              this.state.users.map(function (i) {
+                return _react2.default.createElement(_MenuItem2.default, { key: i._id, value: i.username, primaryText: i.username });
+              })
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'h3',
+            null,
+            ' Assign to '
+          ),
+          ' ',
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'div',
+            { className: 'field-line' },
+            _react2.default.createElement(
+              _DropDownMenu2.default,
+              { value: this.state.selectedTarget, onChange: this.handleTargetChange },
+              this.state.users.map(function (i) {
+
+                return _react2.default.createElement(_MenuItem2.default, { key: i._id, value: i.username, primaryText: i.username });
+              })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'button-line' },
+            _react2.default.createElement(_RaisedButton2.default, { type: 'submit', label: 'Assign', primary: true })
+          )
+        )
+      );
+    }
+  }]);
+
+  return ReviewAssignForm;
+}(_react2.default.Component);
+
+/*
+EmployeeAddForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+}; */
+
+exports.default = ReviewAssignForm;
 
 /***/ })
 /******/ ]);

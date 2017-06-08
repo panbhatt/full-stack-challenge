@@ -3,6 +3,7 @@ import axios from 'axios';
 import { browserHistory, Router } from 'react-router';
 import AdminPanel from '../components/AdminPanel.jsx';
 import EmployeeAddForm from './../components/EmployeeAddForm.jsx' ;
+import ReviewAssignForm from './../components/ReviewAssignForm.jsx' ;
 
 
 class AdminPage extends React.Component {
@@ -27,7 +28,7 @@ class AdminPage extends React.Component {
 
     //event.preventDefault();
     console.log("FINALLY COMING HERE in ADMIN page. ", value) ;
-    this.setState({ action : value}) ; 
+    this.setState({ action : value}) ;
   }
 
   /**
@@ -58,6 +59,8 @@ class AdminPage extends React.Component {
       <div>
       <AdminPanel onChange={this.handleMenuItemChange}/>
         { this.state.action === 'AddEmployee' ? <EmployeeAddForm/>  : null }
+
+        { this.state.action === 'AddReview' ? <ReviewAssignForm/>  : null }
 
       </div>
     );

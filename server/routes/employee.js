@@ -1,11 +1,34 @@
 const express = require('express');
 const validator = require('validator');
 const Joi = require('joi');
+
 var Employee = require("./../db/models/Employee");
 
 const router = new express.Router();
 
 const ADMIN = "admin";
+
+// Employee get all
+router.get('/', (req, res) => {
+
+    var selectCrieteria = req.query.isAdmin || false;
+
+    console.log("SELECT CREDIT = ", selectCrieteria);
+    Employee.find({
+        isAdmin: selectCrieteria
+    }, (err, allEmployee) => {
+        console.log("EMPLOYEE = ", allEmployee);
+        if (err) {
+            return res.status(500).json({
+                'status': 'error',
+                'message': 'Unknown error occured'
+            });
+        } else {
+            return res.status(200).json(allEmployee);
+        }
+    })
+
+});
 
 // EMPLOYEE POST CREATION .
 router.post('/', (req, res) => {
