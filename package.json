@@ -21,6 +21,7 @@
         "mongodb": "^2.2.28",
         "react": "^15.5.4",
         "react-dom": "^15.5.4",
+        "react-form-material-ui": "^1.2.0",
         "react-router": "^3.0.0",
         "react-tap-event-plugin": "^2.0.1",
         "validator": "^7.0.0"

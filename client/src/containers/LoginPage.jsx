@@ -55,13 +55,16 @@ class LoginPage extends React.Component {
               sessionStorage.setItem('admin', true) ;
               browserHistory.push('/admin');
           } else {
+              console.log("COMING HERE ") ;
               sessionStorage.setItem('admin', false) ;
               browserHistory.push('/home');
           }
+          sessionStorage.setItem('username',userObject.username) ;
+          console.log("Storingthe username to session " + userObject.username ) ;
 
         })
         .catch(function (errRs) {
-
+          console.error(errRs);
           console.log(errRs.response.data.message) ;
 
           var errObj = {
